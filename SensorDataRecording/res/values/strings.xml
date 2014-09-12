@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Sensor Data Recording</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="start_button">Start</string>
+    <string name="stop_button">stop</string>
+    <string name="enter_file_name">Enter the file name here</string>
+    <string name="enter_text">Enter the file name here</string>
+    
+
+</resources>
