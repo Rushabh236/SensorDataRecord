@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.security.Timestamp;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -49,6 +50,8 @@ public class MainActivity extends Activity implements SensorEventListener {
     //private ConnectionToSensorSimulator conn;
     private long currentTime;
     private long startTime;
+    private long x = 0;
+    private long y = 0;
     //Timestamp timeNow;
 
     float[] acceleration = new float[3];
@@ -228,13 +231,22 @@ public class MainActivity extends Activity implements SensorEventListener {
     	
     }
     
+    DecimalFormat xFormat = new DecimalFormat("0000");
+    DecimalFormat yFormat = new DecimalFormat("00.000000000");
+    
     private void save() {
 
             //myPrintWriter.write(currentTime - startTime + " " + acceleration[0] + " " + acceleration[1] + " " + acceleration[2]
                         //+ " " + magneticField[0] + " " + magneticField[1] + " " + magneticField[2] + "\n");
     	
-    	myPrintWriter.write(getTime(currentTime) + (currentTime - startTime) + " x: " + acceleration[0] + " y: " + acceleration[1] + " z: " + acceleration[2]
+    	
+    	y = currentTime - startTime - x;
+    	
+    	myPrintWriter.write(getTime(currentTime) + "  " + xFormat.format(y) + " x:  " + yFormat.format(acceleration[0]) 
+    			+ " y:  " + yFormat.format(acceleration[1]) + " z:  " + yFormat.format(acceleration[2])
                 + "\n");
+    	
+    	x = currentTime - startTime;
     }
 
     @Override
