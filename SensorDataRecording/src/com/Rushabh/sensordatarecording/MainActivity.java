@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.security.Timestamp;
+//import java.security.Timestamp;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -14,23 +14,28 @@ import java.util.Locale;
 import android.support.v7.app.ActionBarActivity;
 import android.text.format.DateFormat;
 import android.app.Activity;
-import android.os.AsyncTask;
+//import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.StrictMode;
-import android.util.Log;
+//import android.os.Environment;
+//import android.os.StrictMode;
+//import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
+//import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.openintents.sensorsimulator.hardware.Sensor;
-import org.openintents.sensorsimulator.hardware.SensorEvent;
-import org.openintents.sensorsimulator.hardware.SensorEventListener;
-import org.openintents.sensorsimulator.hardware.SensorManagerSimulator;
+//import org.openintents.sensorsimulator.hardware.Sensor;
+//import org.openintents.sensorsimulator.hardware.SensorEvent;
+//import org.openintents.sensorsimulator.hardware.SensorEventListener;
+//import org.openintents.sensorsimulator.hardware.SensorManagerSimulator;
+
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 
 
 public class MainActivity extends Activity implements SensorEventListener {
@@ -46,7 +51,7 @@ public class MainActivity extends Activity implements SensorEventListener {
     PrintWriter myPrintWriter;
 
 
-    private SensorManagerSimulator sensorManager;
+    private SensorManager sensorManager;
     //private ConnectionToSensorSimulator conn;
     private long currentTime;
     private long startTime;
@@ -114,15 +119,15 @@ public class MainActivity extends Activity implements SensorEventListener {
             }
         });
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-		StrictMode.setThreadPolicy(policy);
-		sensorManager = SensorManagerSimulator.getSystemService(this,SENSOR_SERVICE);
-		sensorManager.connectSimulator();
+        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		//StrictMode.setThreadPolicy(policy);
+		sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+		//sensorManager.connectSimulator();
 		
 		
 		 // register this class as a listener for the sensors
-        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManagerSimulator.SENSOR_DELAY_NORMAL);
-        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManagerSimulator.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_NORMAL);
 		
 		//conn = new ConnectionToSensorSimulator();
 	    //conn.execute();
@@ -144,7 +149,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         	synchronized (this) {
    			 
     	        // SENSOR SIMULATOR
-    	        int sensor = event.type;	        
+    	        int sensor = event.sensor.getType();	        
     	 
     	        switch (sensor) {
     	        case Sensor.TYPE_ACCELEROMETER:
