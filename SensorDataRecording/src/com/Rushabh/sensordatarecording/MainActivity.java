@@ -6,11 +6,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.security.Timestamp;
+import java.util.Calendar;
+import java.util.Locale;
 
 import android.support.v7.app.ActionBarActivity;
+import android.text.format.DateFormat;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.Menu;
@@ -44,6 +49,7 @@ public class MainActivity extends Activity implements SensorEventListener {
     //private ConnectionToSensorSimulator conn;
     private long currentTime;
     private long startTime;
+    //Timestamp timeNow;
 
     float[] acceleration = new float[3];
     float[] magneticField = new float[3];
@@ -68,7 +74,10 @@ public class MainActivity extends Activity implements SensorEventListener {
             public void onClick(View v) {
                 // start recording the sensor data
                 try {
-                    myFile = new File("/sdcard/" + textData.getText() + ".txt");
+                	File sdcard = Environment.getExternalStorageDirectory();
+                	myFile = new File(sdcard, textData.getText()+ ".txt");
+                	
+                	//myFile = new File("/sdcard/" + textData.getText() + ".txt");
                     myFile.createNewFile();
 
                     fOut = new FileOutputStream(myFile);
@@ -169,7 +178,13 @@ public class MainActivity extends Activity implements SensorEventListener {
             }
             */
 
-            currentTime = System.currentTimeMillis();
+            
+        	if (isFirstSet) {
+                startTime = System.currentTimeMillis();
+                isFirstSet = false;
+            }
+        	
+        	currentTime = System.currentTimeMillis();
 
             for (int i = 0; i<1 ; i++) {
                 if (!stopFlag) {
@@ -199,11 +214,27 @@ public class MainActivity extends Activity implements SensorEventListener {
             }
         }
     }
-
+    
+    
+    private String getTime(long time) {
+    	
+    	Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(time);
+        String time1 = DateFormat.format("hh:mm:ss", cal).toString();
+        return time1; 
+    	
+    	//String time1 = time.toString();
+    	//return time1;
+    	
+    }
+    
     private void save() {
 
-            myPrintWriter.write(currentTime - startTime + " " + acceleration[0] + " " + acceleration[1] + " " + acceleration[2]
-                        + " " + magneticField[0] + " " + magneticField[1] + " " + magneticField[2] + "\n");
+            //myPrintWriter.write(currentTime - startTime + " " + acceleration[0] + " " + acceleration[1] + " " + acceleration[2]
+                        //+ " " + magneticField[0] + " " + magneticField[1] + " " + magneticField[2] + "\n");
+    	
+    	myPrintWriter.write(getTime(currentTime) + (currentTime - startTime) + " x: " + acceleration[0] + " y: " + acceleration[1] + " z: " + acceleration[2]
+                + "\n");
     }
 
     @Override
