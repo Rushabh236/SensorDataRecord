@@ -77,8 +77,10 @@ public class MainActivity extends Activity implements SensorEventListener {
             public void onClick(View v) {
                 // start recording the sensor data
                 try {
-                	File sdcard = Environment.getExternalStorageDirectory();
-                	myFile = new File(sdcard, textData.getText()+ ".txt");
+                	File iSdCard = getFilesDir();
+                	
+                	//File sdcard = Environment.getExternalStorageDirectory();
+                	myFile = new File(iSdCard, textData.getText()+ ".txt");
                 	
                 	//myFile = new File("/sdcard/" + textData.getText() + ".txt");
                     myFile.createNewFile();
