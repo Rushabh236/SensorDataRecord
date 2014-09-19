@@ -224,7 +224,7 @@ public class MainActivity extends Activity implements SensorEventListener {
     	
     }
     
-    DecimalFormat xFormat = new DecimalFormat("0000");
+    DecimalFormat xFormat = new DecimalFormat("000");
     DecimalFormat yFormat = new DecimalFormat("00.000000000");
     
     private void save() {
@@ -235,10 +235,9 @@ public class MainActivity extends Activity implements SensorEventListener {
     	
     	y = currentTime - startTime - x;
     	
-    	myPrintWriter.write(getTime(currentTime) + "  " + xFormat.format(y) + " x:  " + yFormat.format(acceleration[0]) 
-    			+ " y:  " + yFormat.format(acceleration[1]) + " z:  " + yFormat.format(acceleration[2])
-                + "\n");
-    	
+    	myPrintWriter.write(" \n" + getTime(currentTime) + "  " + xFormat.format(y) + " x:  " + yFormat.format(acceleration[0]) 
+    			+ " y:  " + yFormat.format(acceleration[1]) + " z:  " + yFormat.format(acceleration[2])+ "\n");
+    	 	
     	x = currentTime - startTime;
     }
 
