@@ -8,6 +8,7 @@
     <string name="stop_button">stop</string>
     <string name="enter_file_name">Enter the file name here</string>
     <string name="enter_text">Enter the file name here</string>
+    <string name="textView">root will be here</string>
     
 
 </resources>
